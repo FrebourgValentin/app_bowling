@@ -85,7 +85,7 @@ for (let manche = 0; manche < 10; manche++) {                                   
                     score_m[manche] += 10;
                 }
             }
-            else if ((Number(score_l[i - 1]) + Number(score_l[i])) == 10 && lancer == 1) {      // Si le score est de 10 au second lancer
+            else if ((Number(score_l[i - 1]) + Number(score_l[i])) == 10 && lancer == 1) {      // Si le score de la manche est de 10 au second lancer
                 score_m[manche] += Number(score_l[i]);
 
                 if (score_l[i - 2] == "X") {                                                    // Si Strike au lancer precedent
@@ -99,7 +99,11 @@ for (let manche = 0; manche < 10; manche++) {                                   
                 score_m[manche] += Number(score_l[i]) * 2;
                 score_m[manche - 1] += Number(score_l[i]);
             }
-            else if (score_l[i - 1] == "/" && manche == 9) {                                    // Si Spare au lancer precedent pendant la derniere manche
+            else if (score_l[i - 1] == "/" && manche == 9 && lancer == 0) {                     // Si Spare au lancer precedent au premier lancer pendant la derniere manche
+                score_m[manche] += Number(score_l[i]) * 2;
+                score_m[manche - 1] += Number(score_l[i]);
+            }
+            else if (score_l[i - 2] == "/" && manche == 9 && lancer == 1) {                     // Si Spare il y a 2 lancer precedent au second lancer pendant la derniere manche
                 score_m[manche] += Number(score_l[i]) * 2;
             }
             else if (score_l[i - 1] == "X" && score_l[i - 3] == "X") {                          // Si il y a enchainement Strike au 2 lancers precedent
@@ -121,9 +125,6 @@ for (let manche = 0; manche < 10; manche++) {                                   
             else if (score_l[i] == 10 && manche == 9) {                                         // Si le score est de 10 a la derniere manche
                 score_m[manche] += 10;
                 score_l[i] = "X";
-            }
-            else if ((Number(score_l[i - 1]) + Number(score_l[i])) < 10 && lancer == 1) {       // Si le score est de 10 a la derniere manche
-                lancer++;
             }
             else {
                 score_m[manche] += Number(score_l[i]);                                          // Cumule les points a chaque lancer
